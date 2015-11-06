@@ -10,12 +10,19 @@ var saveButton;
 var brushPicker;
 var brushType;
 
+
 var pumpkin;
+var shia;
+var gary;
+var trump;
 
 
 
 function preload(){
     pumpkin = loadImage("images/pumpkin.png");
+    shia = loadImage("images/shia.png");
+    gary = loadImage("images/gary.png");
+    trump = loadImage("images/trump.png");
     imageMode(CENTER);
 }
 
@@ -38,12 +45,21 @@ function setup() {
     saveButton = select('.saveButton');
     saveButton.mouseClicked(saveFunction);
 
+    clearButton = select('.clearButton');
+    clearButton.mouseClicked(clearFunction);
+
+
     //set up the brush type
     brushPicker = createSelect();
     brushPicker.parent("brushType")
     brushPicker.option('paint brush');
     brushPicker.option('spray can');
     brushPicker.option('image');
+    brushPicker.option('shia');
+    brushPicker.option('gary');
+    brushPicker.option('trump');
+    brushPicker.option('paint bucket');
+    brushPicker.option('eraser');
     brushPicker.changed(changeBrush);
     brushType = brushPicker.value();
 }
@@ -57,6 +73,16 @@ function draw() {
             standardStroke(); 
         } else if(brushType == "image"){
             drawImage(); 
+        } else if(brushType == "shia"){
+            drawShia(); 
+        } else if(brushType == "gary"){
+            drawGary(); 
+        } else if(brushType == "trump"){
+            drawTrump(); 
+        } else if(brushType == "paint bucket"){
+            paintBucket(); 
+        } else if(brushType == "eraser"){
+            eraser(); 
         }
         
     } else {
@@ -102,9 +128,35 @@ function sprayCan(){
     }    
 }
 
+function paintBucket() {
+
+    background("#"+colorPicker.value() );  
+
+}
+
+function eraser() {
+    strokeWeight(slider.value());
+    stroke('white');
+    line(pmouseX, pmouseY, mouseX, mouseY);
+}
+
+
+
 function drawImage(){
     //draw the image where the mouse is and set the size to the brush size
     image(pumpkin,mouseX,mouseY, slider.value(), slider.value());
+}
+function drawShia(){
+    //draw the image where the mouse is and set the size to the brush size
+    image(shia,mouseX,mouseY, slider.value(), slider.value());
+}
+function drawGary(){
+    //draw the image where the mouse is and set the size to the brush size
+    image(gary,mouseX,mouseY, slider.value(), slider.value());
+}
+function drawTrump(){
+    //draw the image where the mouse is and set the size to the brush size
+    image(trump,mouseX,mouseY, slider.value(), slider.value());
 }
 
 //--------------------------
@@ -115,7 +167,12 @@ function changeBrush(){
     brushType = brushPicker.value();
 }
 
-
 function saveFunction() {
     save(drawingCanvas, "myDrawing.jpg");
 }
+
+function clearFunction() {
+    clear();
+    background('white');
+}
+
